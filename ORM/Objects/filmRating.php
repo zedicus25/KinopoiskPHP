@@ -1,14 +1,16 @@
 <?php
 
 namespace ORM\Objects;
-class filmRating
+use ORM\IEquals;
+require_once 'ORM/IEquals.php';
+class filmRating implements IEquals
 {
-    private $id;
-    private $likes;
-    private $dislikes;
-    private $imdb;
+    private int $id;
+    private int $likes;
+    private int $dislikes;
+    private float $imdb;
 
-    public function __construct($id, $likes, $dislikes, $imdb)
+    public function __construct(int $id, int $likes, int $dislikes, float $imdb)
     {
         $this->id = $id;
         $this->likes = $likes;
@@ -17,66 +19,77 @@ class filmRating
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getDislikes()
+    public function getDislikes() : int
     {
         return $this->dislikes;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getImdb()
+    public function getImdb() : float
     {
         return $this->imdb;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getLikes()
+    public function getLikes() : int
     {
         return $this->likes;
     }
 
     /**
-     * @param mixed $id
+     * @param int $dislikes
      */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param mixed $dislikes
-     */
-    public function setDislikes($dislikes): void
+    public function setDislikes(int $dislikes): void
     {
         $this->dislikes = $dislikes;
     }
 
     /**
-     * @param mixed $imdb
+     * @param float $imdb
      */
-    public function setImdb($imdb): void
+    public function setImdb(float $imdb): void
     {
         $this->imdb = $imdb;
     }
 
     /**
-     * @param mixed $likes
+     * @param int $likes
      */
-    public function setLikes($likes): void
+    public function setLikes(int $likes): void
     {
         $this->likes = $likes;
+    }
+
+    public function __toString(): string
+    {
+        return "FilmRating Id: $this->id IMDb: $this->imdb Dislikes: $this->dislikes Likes: $this->likes";
+    }
+
+    function equals($param): bool
+    {
+        if(!($param instanceof filmRating))
+            return false;
+
+        if($this->id === $param->getId()
+            && $this->imdb === $param->getImdb()
+            && $this->dislikes === $param->getDislikes()
+            && $this->likes === $param->getLikes())
+            return true;
+
+        return false;
     }
 }

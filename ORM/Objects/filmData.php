@@ -1,15 +1,18 @@
 <?php
 
 namespace ORM\Objects;
-class filmData
-{
-    private $id;
-    private $country;
-    private $title;
-    private $year;
-    private $duration;
+use ORM\IEquals;
 
-    public function __construct($id, $country, $title, $year, $duration)
+require_once 'ORM/IEquals.php';
+class filmData implements IEquals
+{
+    private int $id;
+    private string $country;
+    private string $title;
+    private int $year;
+    private int $duration;
+
+    public function __construct(int $id, string $country, string $title, int $year, int $duration)
     {
         $this->id = $id;
         $this->country = $country;
@@ -19,82 +22,95 @@ class filmData
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getCountry()
+    public function getCountry() : string
     {
         return $this->country;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getDuration()
+    public function getDuration() : int
     {
         return $this->duration;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getYear()
+    public function getYear() : int
     {
         return $this->year;
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
 
     /**
-     * @param mixed $country
+     * @param string $country
      */
-    public function setCountry($country): void
+    public function setCountry(string $country): void
     {
         $this->country = $country;
     }
 
     /**
-     * @param mixed $duration
+     * @param int $duration
      */
-    public function setDuration($duration): void
+    public function setDuration(int $duration): void
     {
         $this->duration = $duration;
     }
 
     /**
-     * @param mixed $title
+     * @param string $title
      */
-    public function setTitle($title): void
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
     /**
-     * @param mixed $year
+     * @param int $year
      */
-    public function setYear($year): void
+    public function setYear(int $year): void
     {
         $this->year = $year;
+    }
+
+    public function __toString(): string
+    {
+        return "FilmData: Id: $this->id Title: $this->title Country: $this->country Year: $this->year Duration: $this->duration";
+    }
+
+    function equals($param): bool
+    {
+        if(!($param instanceof filmData))
+            return false;
+
+        if($this->id === $param->getId()
+            && $this->country === $param->getCountry()
+            && $this->title === $param->getTitle()
+            && $this->year === $param->getYear()
+            && $this->duration === $param->getDuration())
+            return true;
+
+        return false;
     }
 }

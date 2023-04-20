@@ -1,14 +1,16 @@
 <?php
 
 namespace ORM\Objects;
-class user
-{
-    private $id;
-    private $login;
-    private $password;
-    private $isPremium;
+use ORM\IEquals;
 
-    public function __construct($id, $isPremium, $login, $password)
+class user implements IEquals
+{
+    private int $id;
+    private string $login;
+    private string $password;
+    private bool $isPremium;
+
+    public function __construct(int $id, bool $isPremium, string $login, string $password)
     {
         $this->id = $id;
         $this->isPremium = $isPremium;
@@ -17,66 +19,77 @@ class user
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getIsPremium()
+    public function getIsPremium() : bool
     {
         return $this->isPremium;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getLogin()
+    public function getLogin() : string
     {
         return $this->login;
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPassword()
+    public function getPassword() : string
     {
         return $this->password;
     }
 
     /**
-     * @param mixed $id
+     * @param bool $isPremium
      */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @param mixed $isPremium
-     */
-    public function setIsPremium($isPremium): void
+    public function setIsPremium(bool $isPremium): void
     {
         $this->isPremium = $isPremium;
     }
 
     /**
-     * @param mixed $login
+     * @param string $login
      */
-    public function setLogin($login): void
+    public function setLogin(string $login): void
     {
         $this->login = $login;
     }
 
     /**
-     * @param mixed $password
+     * @param string $password
      */
-    public function setPassword($password): void
+    public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    public function __toString(): string
+    {
+        return "User: Id: $this->id Login: $this->login IsPremium: $this->isPremium";
+    }
+
+    function equals($param): bool
+    {
+        if(!($param instanceof user))
+            return false;
+
+        if($this->id === $param->getId()
+            && $this->isPremium === $param->getIsPremium()
+            && $this->login === $param->getLogin()
+            && $this->password === $param->getPassword())
+            return true;
+
+        return false;
     }
 }
