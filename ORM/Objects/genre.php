@@ -2,11 +2,10 @@
 
 namespace ORM\Objects;
 use ORM\IEquals;
-require_once 'ORM/IEquals.php';
+require_once 'ORM/Objects/model.php';
 
-class genre implements IEquals
+class genre extends model
 {
-    private int $id;
     private string $title;
 
     public function __construct(int $id, string $title)
@@ -25,14 +24,6 @@ class genre implements IEquals
     }
 
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return string
      */
     public function getTitle(): string
@@ -47,12 +38,17 @@ class genre implements IEquals
 
     function equals($param): bool
     {
-        if(!($param instanceof genre))
+        if(!$this->instanceofThis($param))
             return false;
 
         if($this->id === $param->getId() && $this->title === $param->getTitle())
             return true;
 
         return false;
+    }
+
+    function instanceofThis($param): bool
+    {
+       return ($param instanceof genre);
     }
 }

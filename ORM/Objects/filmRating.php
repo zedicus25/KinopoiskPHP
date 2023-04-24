@@ -2,10 +2,9 @@
 
 namespace ORM\Objects;
 use ORM\IEquals;
-require_once 'ORM/IEquals.php';
-class filmRating implements IEquals
+require_once 'ORM/Objects/model.php';
+class filmRating extends model
 {
-    private int $id;
     private int $likes;
     private int $dislikes;
     private float $imdb;
@@ -16,14 +15,6 @@ class filmRating implements IEquals
         $this->likes = $likes;
         $this->dislikes = $dislikes;
         $this->imdb = $imdb;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
     }
 
     /**
@@ -81,7 +72,7 @@ class filmRating implements IEquals
 
     function equals($param): bool
     {
-        if(!($param instanceof filmRating))
+        if(!$this->instanceofThis($param))
             return false;
 
         if($this->id === $param->getId()
@@ -91,5 +82,10 @@ class filmRating implements IEquals
             return true;
 
         return false;
+    }
+
+    function instanceofThis($param): bool
+    {
+        return ($param instanceof filmRating);
     }
 }

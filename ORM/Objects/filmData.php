@@ -2,11 +2,9 @@
 
 namespace ORM\Objects;
 use ORM\IEquals;
-
-require_once 'ORM/IEquals.php';
-class filmData implements IEquals
+require_once 'ORM/Objects/filmData.php';
+class filmData extends model
 {
-    private int $id;
     private string $country;
     private string $title;
     private int $year;
@@ -21,13 +19,6 @@ class filmData implements IEquals
         $this->duration = $duration;
     }
 
-    /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string
@@ -101,7 +92,7 @@ class filmData implements IEquals
 
     function equals($param): bool
     {
-        if(!($param instanceof filmData))
+        if(!$this->instanceofThis($param))
             return false;
 
         if($this->id === $param->getId()
@@ -112,5 +103,10 @@ class filmData implements IEquals
             return true;
 
         return false;
+    }
+
+    function instanceofThis($param): bool
+    {
+        return ($param instanceof filmData);
     }
 }

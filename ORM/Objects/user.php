@@ -2,10 +2,9 @@
 
 namespace ORM\Objects;
 use ORM\IEquals;
-
-class user implements IEquals
+require_once 'ORM/Objects/model.php';
+class user extends model
 {
-    private int $id;
     private string $login;
     private string $password;
     private bool $isPremium;
@@ -18,13 +17,6 @@ class user implements IEquals
         $this->password = $password;
     }
 
-    /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
 
     /**
      * @return bool
@@ -81,7 +73,7 @@ class user implements IEquals
 
     function equals($param): bool
     {
-        if(!($param instanceof user))
+        if(!$this->instanceofThis($param))
             return false;
 
         if($this->id === $param->getId()
@@ -91,5 +83,10 @@ class user implements IEquals
             return true;
 
         return false;
+    }
+
+    function instanceofThis($param): bool
+    {
+        return ($param instanceof user);
     }
 }

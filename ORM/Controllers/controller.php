@@ -2,10 +2,14 @@
 
 namespace ORM\Controllers;
 
+use mysqli;
+use ORM\Objects\model;
+require_once 'ORM/Objects/model.php';
+
 abstract class controller
 {
-    private $connection;
-    private $collection;
+    protected $connection;
+    protected array $collection;
 
     public function __construct($connection)
     {
@@ -13,25 +17,20 @@ abstract class controller
         $this->connection = $connection;
     }
 
-    public function add($item) {
-        array_push($this->collection, $item);
-    }
+    public abstract function add(model $item): void;
 
-    public function remove($id) {
-        $this->collection  = array_slice($this->collection, $id,1);
-    }
 
-    public function update($id, $newItem){
-        $this->collection[$id] = $newItem;
-    }
+    public abstract function remove(int $id) : void;
+    public abstract function removeByModel(model $model) : void;
 
-    public function getById($id) {
-        return $this->collection[$id];
-    }
 
-    /**
-     * @return array
-     */
+    public abstract function update(int $id, model $newItem) : void;
+    public abstract function updateByModel(model $oldItem, model $newItem) : void;
+
+    public abstract function getById(int $id) : model;
+
+    public abstract function select(string $text): array;
+
     public function getCollection(): array
     {
         return $this->collection;
