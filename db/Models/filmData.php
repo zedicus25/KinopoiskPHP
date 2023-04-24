@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Models;
-require_once 'Database/Models/filmData.php';
+require_once 'db/Models/filmData.php';
 class filmData extends model
 {
     private string $country;

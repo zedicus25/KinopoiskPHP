@@ -4,8 +4,8 @@ namespace Database\Controllers;
 use Database\Models\filmRating;
 use Database\Models\model;
 
-require_once 'Database/Controllers/controller.php';
-require_once 'Database/Models/filmRating.php';
+require_once 'db/Controllers/controller.php';
+require_once 'db/Models/filmRating.php';
 class filmRatingsController extends controller
 {
 
@@ -28,7 +28,7 @@ class filmRatingsController extends controller
                 echo '<p>added!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn?->close();
@@ -46,7 +46,7 @@ class filmRatingsController extends controller
                 echo '<p>deleted!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn->close();
@@ -71,7 +71,7 @@ class filmRatingsController extends controller
                 echo '<p>updated!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         }
         finally {

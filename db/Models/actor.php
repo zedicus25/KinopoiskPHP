@@ -1,13 +1,12 @@
 <?php
 
 namespace Database\Models;
-require_once 'Database/Models/model.php';
-class director extends model
+require_once 'db/Models/model.php';
+class actor extends model
 {
     private int $filmId;
     private string $name;
     private string $lastName;
-
     public function __construct(int $id, int $filmId, string $name, string $lastName)
     {
         $this->id = $id;
@@ -32,6 +31,7 @@ class director extends model
         return $this->filmId;
     }
 
+
     /**
      * @return string
      */
@@ -47,7 +47,6 @@ class director extends model
     {
         $this->filmId = $filmId;
     }
-
 
     /**
      * @param string $lastName
@@ -67,7 +66,7 @@ class director extends model
 
     public function __toString(): string
     {
-        return "Director: Id: $this->id FilmId: $this->filmId Name: $this->name Last Name: $this->lastName";
+        return "Actor: Id: $this->id FilmId: $this->filmId Name: $this->name Last Name: $this->lastName";
     }
 
     function equals($param): bool
@@ -87,6 +86,6 @@ class director extends model
 
     function instanceofThis($param): bool
     {
-        return $param instanceof director;
+        return $param instanceof actor;
     }
 }

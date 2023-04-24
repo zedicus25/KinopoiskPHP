@@ -5,8 +5,8 @@ use Database\Models\actor;
 use Database\Models\model;
 
 
-require_once 'Database/Controllers/controller.php';
-require_once "Database/Models/actor.php";
+require_once 'db/Controllers/controller.php';
+require_once "db/Models/actor.php";
 class actorsController extends controller
 {
     public function remove(int $id): void
@@ -20,7 +20,7 @@ class actorsController extends controller
                 echo '<p>deleted!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn->close();
@@ -45,7 +45,7 @@ class actorsController extends controller
                 echo '<p>updated!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         }
         finally {
@@ -73,7 +73,7 @@ class actorsController extends controller
                 echo '<p>added!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn?->close();

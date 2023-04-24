@@ -4,7 +4,7 @@ namespace Database\Controllers;
 
 use Database\Models\model;
 
-require_once 'Database/Models/model.php';
+require_once 'db/Models/model.php';
 
 abstract class controller
 {

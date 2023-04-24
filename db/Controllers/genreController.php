@@ -1,38 +1,36 @@
 <?php
 
 namespace Database\Controllers;
-use Database\Models\director;
+use Database\Models\genre;
 use Database\Models\model;
 
-require_once 'Database/Controllers/controller.php';
-require_once 'Database/Models/director.php';
-class directorController extends controller
+require_once 'db/Controllers/controller.php';
+require_once 'db/Models/genre.php';
+class genreController extends controller
 {
 
     public function add(model $item): void
     {
-        if(!($item instanceof director))
+        if(!($item instanceof genre))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
-
         try {
 
-            $filmId = $item->getFilmId();
-            $name = $item->getName();
-            $lastName = $item->getLastName();
+            $title = $item->getTitle();
 
-            $sql_ins = "INSERT INTO directors (filmId, name, lastName) VALUES ('$filmId', '$name', '$lastName')";
+            $sql_ins = "INSERT INTO genres (title) VALUES ('$title')";
 
             if($conn->query($sql_ins)){
                 echo '<p>added!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn?->close();
         }
+
     }
 
     public function remove(int $id): void
@@ -40,13 +38,13 @@ class directorController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $del = "DELETE FROM directors WHERE Id='$id';";
+            $del = "DELETE FROM genres WHERE Id='$id';";
 
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn->close();
@@ -55,23 +53,21 @@ class directorController extends controller
 
     public function update(int $id, $newItem): void
     {
-        if(!($newItem instanceof director))
+        if(!($newItem instanceof genre))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
 
         try {
-            $filmId = $newItem->getFilmId();
-            $name = $newItem->getName();
-            $lastName = $newItem->getLastName();
+            $title = $newItem->getTitle();
 
-            $upd = "UPDATE directors SET filmId='$filmId',name='$name', lastName='$lastName' WHERE Id='$id'";
+            $upd = "UPDATE genres SET title='$title' WHERE Id='$id'";
 
             if($conn->query($upd)){
                 echo '<p>updated!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         }
         finally {
@@ -82,7 +78,7 @@ class directorController extends controller
 
     public function removeByModel(model $model): void
     {
-        if(!($model instanceof director))
+        if(!($model instanceof genre))
             throw new \InvalidArgumentException("Wrong type!");
 
         $id = $model->getId();
@@ -91,23 +87,23 @@ class directorController extends controller
 
     public function updateByModel(model $oldItem, model $newItem): void
     {
-        if(!($oldItem instanceof director))
+        if(!($oldItem instanceof genre))
             throw new \InvalidArgumentException("Wrong type!");
 
         $id = $oldItem->getId();
         $this->update($id, $newItem);
     }
 
-    public function select(string $text): array
+    public function getById(int $id): model
     {
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM directors WHERE $text";
+            $select = "SELECT * FROM genres WHERE id='$id'";
             $res = $conn->query($select);
-            $result = array();
+            $result = null;
             foreach ($res as $iter){
-                array_push($result, new director($iter['Id'], $iter['FilmId'], $iter['Name'], $iter['LastName']));
+                $result = new genre($iter['Id'], $iter['Title']);
             }
             $res->free();
             return $result;
@@ -117,16 +113,16 @@ class directorController extends controller
         }
     }
 
-    public function getById(int $id): model
+    public function select(string $text): array
     {
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM directors WHERE id='$id'";
+            $select = "SELECT * FROM genres WHERE $text";
             $res = $conn->query($select);
-            $result = null;
+            $result = array();
             foreach ($res as $iter){
-                $result = new director($iter['Id'], $iter['FilmId'], $iter['Name'], $iter['LastName']);
+                array_push($result, new genre($iter['Id'], $iter['Title']));
             }
             $res->free();
             return $result;

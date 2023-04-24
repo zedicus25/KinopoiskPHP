@@ -9,13 +9,13 @@ use Database\Controllers\filmsController;
 use Database\Controllers\genreController;
 use Database\Controllers\usersController;
 
-require_once 'Database/Controllers/actorsController.php';
-require_once 'Database/Controllers/directorController.php';
-require_once 'Database/Controllers/filmDataController.php';
-require_once 'Database/Controllers/filmRatingsController.php';
-require_once 'Database/Controllers/filmsController.php';
-require_once 'Database/Controllers/genreController.php';
-require_once 'Database/Controllers/usersController.php';
+require_once 'db/Controllers/actorsController.php';
+require_once 'db/Controllers/directorController.php';
+require_once 'db/Controllers/filmDataController.php';
+require_once 'db/Controllers/filmRatingsController.php';
+require_once 'db/Controllers/filmsController.php';
+require_once 'db/Controllers/genreController.php';
+require_once 'db/Controllers/usersController.php';
 class UOF
 {
     private $conn;

@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Models;
-require_once 'Database/Models/model.php';
+require_once 'db/Models/model.php';
 
 class genre extends model
 {

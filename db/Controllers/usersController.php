@@ -1,35 +1,34 @@
 <?php
 
 namespace Database\Controllers;
-use Database\Models\film;
 use Database\Models\model;
+use Database\Models\user;
 
-require_once 'Database/Controllers/controller.php';
-require_once 'Database/Models/film.php';
-class filmsController extends controller
+require_once 'db/Controllers/controller.php';
+require_once 'db/Models/user.php';
+class usersController extends controller
 {
 
     public function add(model $item): void
     {
-        if(!($item instanceof film))
+        if(!($item instanceof user))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
 
         try {
 
-            $genreId = $item->getGenreId();
-            $filmRatingId = $item->getFilmRatingId();
-            $filmDataId = $item->getFilmDataId();
+            $login = $item->getLogin();
+            $pass = $item->getPassword();
             $isPremium = $item->getIsPremium();
 
-            $sql_ins = "INSERT INTO films (genreId, filmRatingId, filmDataId, isPremium) VALUES ('$genreId', '$filmRatingId', '$filmDataId', '$isPremium')";
+            $sql_ins = "INSERT INTO users (login, password, isPremium) VALUES ('$login', '$pass', '$isPremium')";
 
             if($conn->query($sql_ins)){
                 echo '<p>added!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn?->close();
@@ -43,13 +42,13 @@ class filmsController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $del = "DELETE FROM films WHERE Id='$id';";
+            $del = "DELETE FROM users WHERE Id='$id';";
 
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn->close();
@@ -58,24 +57,23 @@ class filmsController extends controller
 
     public function update(int $id, $newItem): void
     {
-        if(!($newItem instanceof film))
+        if(!($newItem instanceof users))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
 
         try {
-            $genreId = $newItem->getGenreId();
-            $filmRatingId = $newItem->getFilmRatingId();
-            $filmDataId = $newItem->getFilmDataId();
+            $login = $newItem->getLogin();
+            $pass = $newItem->getPassword();
             $isPremium = $newItem->getIsPremium();
 
-            $upd = "UPDATE films SET genreId='$genreId',filmRatingId='$filmRatingId', filmDataId='$filmDataId', isPremium='$isPremium' WHERE Id='$id'";
+            $upd = "UPDATE users SET login='$login',password='$pass',isPremium='$isPremium' WHERE Id='$id'";
 
             if($conn->query($upd)){
                 echo '<p>updated!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         }
         finally {
@@ -83,10 +81,9 @@ class filmsController extends controller
         }
     }
 
-
     public function removeByModel(model $model): void
     {
-        if(!($model instanceof film))
+        if(!($model instanceof user))
             throw new \InvalidArgumentException("Wrong type!");
 
         $id = $model->getId();
@@ -95,7 +92,7 @@ class filmsController extends controller
 
     public function updateByModel(model $oldItem, model $newItem): void
     {
-        if(!($oldItem instanceof film))
+        if(!($oldItem instanceof user))
             throw new \InvalidArgumentException("Wrong type!");
 
         $id = $oldItem->getId();
@@ -107,11 +104,11 @@ class filmsController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM films WHERE id='$id'";
+            $select = "SELECT * FROM users WHERE id='$id'";
             $res = $conn->query($select);
             $result = null;
             foreach ($res as $iter){
-                $result = new film($iter['Id'], $iter['GanreId'], $iter['FilmDataId'], $iter['FilmRatingId'], $iter['IsPremium']);
+                $result = new user($iter['Id'], $iter['Login'], $iter['Password'], $iter['IsPremium']);
             }
             $res->free();
             return $result;
@@ -126,11 +123,11 @@ class filmsController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM films WHERE $text";
+            $select = "SELECT * FROM users WHERE $text";
             $res = $conn->query($select);
             $result = array();
             foreach ($res as $iter){
-                array_push($result, new film($iter['Id'], $iter['GanreId'], $iter['FilmDataId'], $iter['FilmRatingId'], $iter['IsPremium']));
+                array_push($result, new user($iter['Id'], $iter['Login'], $iter['Password'], $iter['IsPremium']));
             }
             $res->free();
             return $result;
