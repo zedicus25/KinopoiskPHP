@@ -4,8 +4,8 @@ namespace Database\Controllers;
 use Database\Models\filmData;
 use Database\Models\model;
 
-require_once 'db/Controllers/controller.php';
-require_once 'db/Models/filmData.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/filmData.php';
 class filmDataController extends controller
 {
 

@@ -4,8 +4,8 @@ namespace Database\Controllers;
 use Database\Models\filmRating;
 use Database\Models\model;
 
-require_once 'db/Controllers/controller.php';
-require_once 'db/Models/filmRating.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/filmRating.php';
 class filmRatingsController extends controller
 {
 

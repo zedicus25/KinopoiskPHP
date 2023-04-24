@@ -9,13 +9,13 @@ use Database\Controllers\filmsController;
 use Database\Controllers\genreController;
 use Database\Controllers\usersController;
 
-require_once 'db/Controllers/actorsController.php';
-require_once 'db/Controllers/directorController.php';
-require_once 'db/Controllers/filmDataController.php';
-require_once 'db/Controllers/filmRatingsController.php';
-require_once 'db/Controllers/filmsController.php';
-require_once 'db/Controllers/genreController.php';
-require_once 'db/Controllers/usersController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/actorsController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/directorController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/filmDataController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/filmRatingsController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/filmsController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/genreController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/usersController.php';
 class UOF
 {
     private $conn;

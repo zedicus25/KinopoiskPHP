@@ -4,8 +4,8 @@ namespace Database\Controllers;
 use Database\Models\model;
 use Database\Models\user;
 
-require_once 'db/Controllers/controller.php';
-require_once 'db/Models/user.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/user.php';
 class usersController extends controller
 {
 

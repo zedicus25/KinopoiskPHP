@@ -1,14 +1,14 @@
 <?php
 
 namespace Database\Controllers;
+use Database\Models\director;
 use Database\Models\film;
 use Database\Models\model;
 
-require_once 'db/Controllers/controller.php';
-require_once 'db/Models/film.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/film.php';
 class filmsController extends controller
 {
-
     public function add(model $item): void
     {
         if(!($item instanceof film))
@@ -139,4 +139,6 @@ class filmsController extends controller
             $conn->close();
         }
     }
+
+
 }

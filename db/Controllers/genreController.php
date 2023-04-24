@@ -4,8 +4,8 @@ namespace Database\Controllers;
 use Database\Models\genre;
 use Database\Models\model;
 
-require_once 'db/Controllers/controller.php';
-require_once 'db/Models/genre.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/genre.php';
 class genreController extends controller
 {
 

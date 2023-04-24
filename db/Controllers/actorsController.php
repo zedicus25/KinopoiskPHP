@@ -5,8 +5,8 @@ use Database\Models\actor;
 use Database\Models\model;
 
 
-require_once 'db/Controllers/controller.php';
-require_once "db/Models/actor.php";
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/actor.php';
 class actorsController extends controller
 {
     public function remove(int $id): void

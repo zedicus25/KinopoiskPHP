@@ -4,8 +4,8 @@ namespace Database\Controllers;
 use Database\Models\director;
 use Database\Models\model;
 
-require_once 'db/Controllers/controller.php';
-require_once 'db/Models/director.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/director.php';
 class directorController extends controller
 {
 
