@@ -3,10 +3,10 @@
 namespace ORM\Objects;
 use ORM\IEquals;
 require_once 'ORM/IEquals.php';
+require_once 'ORM/Objects/model.php';
 
-class film implements IEquals
+class film extends model
 {
-    private int $id;
     private int $genreId;
     private int $filmRatingId;
     private int $filmDataId;
@@ -21,13 +21,6 @@ class film implements IEquals
         $this->isPremium = $isPremium;
     }
 
-    /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
 
     /**
      * @return int
@@ -100,7 +93,7 @@ class film implements IEquals
 
     function equals($param): bool
     {
-        if(!($param instanceof film))
+        if(!$this->instanceofThis($param))
             return false;
 
         if($this->id === $param->getId()
@@ -112,5 +105,10 @@ class film implements IEquals
 
 
         return true;
+    }
+
+    function instanceofThis($param): bool
+    {
+        return ($param instanceof film);
     }
 }

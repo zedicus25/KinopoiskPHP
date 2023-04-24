@@ -2,10 +2,9 @@
 
 namespace ORM\Objects;
 use ORM\IEquals;
-require_once 'ORM/IEquals.php';
-class actor implements IEquals
+require_once 'ORM/Objects/model.php';
+class actor extends model
 {
-    private int $id;
     private int $filmId;
     private string $name;
     private string $lastName;
@@ -33,13 +32,6 @@ class actor implements IEquals
         return $this->filmId;
     }
 
-    /**
-     * @return int
-     */
-    public function getId() : int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string
@@ -80,7 +72,7 @@ class actor implements IEquals
 
     function equals($param): bool
     {
-        if(!($param instanceof actor))
+        if(!$this->instanceofThis($param))
             return false;
 
         if($this->id === $param->getId()
@@ -91,5 +83,10 @@ class actor implements IEquals
 
         return false;
 
+    }
+
+    function instanceofThis($param): bool
+    {
+        return $param instanceof actor;
     }
 }

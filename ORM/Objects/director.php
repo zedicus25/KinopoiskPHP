@@ -2,10 +2,9 @@
 
 namespace ORM\Objects;
 use ORM\IEquals;
-require_once 'ORM/IEquals.php';
-class director implements IEquals
+require_once 'ORM/Objects/model.php';
+class director extends model
 {
-    private int $id;
     private int $filmId;
     private string $name;
     private string $lastName;
@@ -32,14 +31,6 @@ class director implements IEquals
     public function getFilmId() : int
     {
         return $this->filmId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
     }
 
     /**
@@ -82,7 +73,7 @@ class director implements IEquals
 
     function equals($param): bool
     {
-        if(!($param instanceof director))
+        if(!$this->instanceofThis($param))
             return false;
 
         if($this->id === $param->getId()
@@ -93,5 +84,10 @@ class director implements IEquals
 
         return false;
 
+    }
+
+    function instanceofThis($param): bool
+    {
+        return $param instanceof director;
     }
 }
