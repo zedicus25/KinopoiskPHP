@@ -1,21 +1,21 @@
 <?php
 
-namespace ORM;
-use ORM\Controllers\actorsController;
-use ORM\Controllers\directorController;
-use ORM\Controllers\filmDataController;
-use ORM\Controllers\filmRatingsController;
-use ORM\Controllers\filmsController;
-use ORM\Controllers\genreController;
-use ORM\Controllers\usersController;
+namespace Database;
+use Database\Controllers\actorsController;
+use Database\Controllers\directorController;
+use Database\Controllers\filmDataController;
+use Database\Controllers\filmRatingsController;
+use Database\Controllers\filmsController;
+use Database\Controllers\genreController;
+use Database\Controllers\usersController;
 
-require_once 'ORM/Controllers/actorsController.php';
-require_once 'ORM/Controllers/directorController.php';
-require_once 'ORM/Controllers/filmDataController.php';
-require_once 'ORM/Controllers/filmRatingsController.php';
-require_once 'ORM/Controllers/filmsController.php';
-require_once 'ORM/Controllers/genreController.php';
-require_once 'ORM/Controllers/usersController.php';
+require_once 'Database/Controllers/actorsController.php';
+require_once 'Database/Controllers/directorController.php';
+require_once 'Database/Controllers/filmDataController.php';
+require_once 'Database/Controllers/filmRatingsController.php';
+require_once 'Database/Controllers/filmsController.php';
+require_once 'Database/Controllers/genreController.php';
+require_once 'Database/Controllers/usersController.php';
 class UOF
 {
     private $conn;

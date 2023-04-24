@@ -1,9 +1,8 @@
 <?php
 
-namespace ORM\Objects;
+namespace Database\Models;
 
-use ORM\IEquals;
-require_once 'ORM/IEquals.php';
+
 abstract class model implements IEquals
 {
     protected int $id;

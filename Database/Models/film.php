@@ -1,9 +1,7 @@
 <?php
 
-namespace ORM\Objects;
-use ORM\IEquals;
-require_once 'ORM/IEquals.php';
-require_once 'ORM/Objects/model.php';
+namespace Database\Models;
+require_once 'Database/Models/model.php';
 
 class film extends model
 {

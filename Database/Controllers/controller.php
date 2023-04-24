@@ -1,10 +1,10 @@
 <?php
 
-namespace ORM\Controllers;
+namespace Database\Controllers;
 
-use mysqli;
-use ORM\Objects\model;
-require_once 'ORM/Objects/model.php';
+use Database\Models\model;
+
+require_once 'Database/Models/model.php';
 
 abstract class controller
 {

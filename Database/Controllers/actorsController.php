@@ -1,12 +1,12 @@
 <?php
 
-namespace ORM\Controllers;
-use ORM\Objects\actor;
-use ORM\Objects\model;
+namespace Database\Controllers;
+use Database\Models\actor;
+use Database\Models\model;
 
 
-require_once 'ORM/Controllers/controller.php';
-require_once "ORM/Objects/actor.php";
+require_once 'Database/Controllers/controller.php';
+require_once "Database/Models/actor.php";
 class actorsController extends controller
 {
     public function remove(int $id): void

@@ -1,11 +1,11 @@
 <?php
 
-namespace ORM\Controllers;
-use ORM\Objects\filmData;
-use ORM\Objects\model;
+namespace Database\Controllers;
+use Database\Models\filmData;
+use Database\Models\model;
 
-require_once 'ORM/Controllers/controller.php';
-require_once 'ORM/Objects/filmData.php';
+require_once 'Database/Controllers/controller.php';
+require_once 'Database/Models/filmData.php';
 class filmDataController extends controller
 {
 

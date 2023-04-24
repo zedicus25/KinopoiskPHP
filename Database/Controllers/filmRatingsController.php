@@ -1,11 +1,11 @@
 <?php
 
-namespace ORM\Controllers;
-use ORM\Objects\filmRating;
-use ORM\Objects\model;
+namespace Database\Controllers;
+use Database\Models\filmRating;
+use Database\Models\model;
 
-require_once 'ORM/Controllers/controller.php';
-require_once 'ORM/Objects/filmRating.php';
+require_once 'Database/Controllers/controller.php';
+require_once 'Database/Models/filmRating.php';
 class filmRatingsController extends controller
 {
 

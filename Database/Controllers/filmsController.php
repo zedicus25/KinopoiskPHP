@@ -1,25 +1,29 @@
 <?php
 
-namespace ORM\Controllers;
-use ORM\Objects\genre;
-use ORM\Objects\model;
+namespace Database\Controllers;
+use Database\Models\film;
+use Database\Models\model;
 
-require_once 'ORM/Controllers/controller.php';
-require_once 'ORM/Objects/genre.php';
-class genreController extends controller
+require_once 'Database/Controllers/controller.php';
+require_once 'Database/Models/film.php';
+class filmsController extends controller
 {
 
     public function add(model $item): void
     {
-        if(!($item instanceof genre))
+        if(!($item instanceof film))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
+
         try {
 
-            $title = $item->getTitle();
+            $genreId = $item->getGenreId();
+            $filmRatingId = $item->getFilmRatingId();
+            $filmDataId = $item->getFilmDataId();
+            $isPremium = $item->getIsPremium();
 
-            $sql_ins = "INSERT INTO genres (title) VALUES ('$title')";
+            $sql_ins = "INSERT INTO films (genreId, filmRatingId, filmDataId, isPremium) VALUES ('$genreId', '$filmRatingId', '$filmDataId', '$isPremium')";
 
             if($conn->query($sql_ins)){
                 echo '<p>added!</p>';
@@ -31,6 +35,7 @@ class genreController extends controller
             $conn?->close();
         }
 
+
     }
 
     public function remove(int $id): void
@@ -38,7 +43,7 @@ class genreController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $del = "DELETE FROM genres WHERE Id='$id';";
+            $del = "DELETE FROM films WHERE Id='$id';";
 
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
@@ -53,15 +58,18 @@ class genreController extends controller
 
     public function update(int $id, $newItem): void
     {
-        if(!($newItem instanceof genre))
+        if(!($newItem instanceof film))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
 
         try {
-            $title = $newItem->getTitle();
+            $genreId = $newItem->getGenreId();
+            $filmRatingId = $newItem->getFilmRatingId();
+            $filmDataId = $newItem->getFilmDataId();
+            $isPremium = $newItem->getIsPremium();
 
-            $upd = "UPDATE genres SET title='$title' WHERE Id='$id'";
+            $upd = "UPDATE films SET genreId='$genreId',filmRatingId='$filmRatingId', filmDataId='$filmDataId', isPremium='$isPremium' WHERE Id='$id'";
 
             if($conn->query($upd)){
                 echo '<p>updated!</p>';
@@ -78,7 +86,7 @@ class genreController extends controller
 
     public function removeByModel(model $model): void
     {
-        if(!($model instanceof genre))
+        if(!($model instanceof film))
             throw new \InvalidArgumentException("Wrong type!");
 
         $id = $model->getId();
@@ -87,7 +95,7 @@ class genreController extends controller
 
     public function updateByModel(model $oldItem, model $newItem): void
     {
-        if(!($oldItem instanceof genre))
+        if(!($oldItem instanceof film))
             throw new \InvalidArgumentException("Wrong type!");
 
         $id = $oldItem->getId();
@@ -99,11 +107,11 @@ class genreController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM genres WHERE id='$id'";
+            $select = "SELECT * FROM films WHERE id='$id'";
             $res = $conn->query($select);
             $result = null;
             foreach ($res as $iter){
-                $result = new genre($iter['Id'], $iter['Title']);
+                $result = new film($iter['Id'], $iter['GanreId'], $iter['FilmDataId'], $iter['FilmRatingId'], $iter['IsPremium']);
             }
             $res->free();
             return $result;
@@ -118,11 +126,11 @@ class genreController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM genres WHERE $text";
+            $select = "SELECT * FROM films WHERE $text";
             $res = $conn->query($select);
             $result = array();
             foreach ($res as $iter){
-                array_push($result, new genre($iter['Id'], $iter['Title']));
+                array_push($result, new film($iter['Id'], $iter['GanreId'], $iter['FilmDataId'], $iter['FilmRatingId'], $iter['IsPremium']));
             }
             $res->free();
             return $result;

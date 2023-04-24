@@ -1,8 +1,7 @@
 <?php
 
-namespace ORM\Objects;
-use ORM\IEquals;
-require_once 'ORM/Objects/filmData.php';
+namespace Database\Models;
+require_once 'Database/Models/filmData.php';
 class filmData extends model
 {
     private string $country;
