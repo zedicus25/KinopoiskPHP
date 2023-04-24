@@ -1,0 +1,58 @@
+<?php
+
+namespace ORM\Objects;
+use ORM\IEquals;
+require_once 'ORM/IEquals.php';
+
+class genre implements IEquals
+{
+    private int $id;
+    private string $title;
+
+    public function __construct(int $id, string $title)
+    {
+        $this->id = $id;
+        $this->title = $title;
+    }
+
+
+    /**
+     * @param string $title
+     */
+    public function setTitle(string $title): void
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
+
+    public function __toString(): string
+    {
+        return "Genre: Id: $this->id Title: $this->title";
+    }
+
+    function equals($param): bool
+    {
+        if(!($param instanceof genre))
+            return false;
+
+        if($this->id === $param->getId() && $this->title === $param->getTitle())
+            return true;
+
+        return false;
+    }
+}
