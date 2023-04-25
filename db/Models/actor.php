@@ -5,23 +5,17 @@ require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/model.php';
 class actor extends model
 {
     private int $filmId;
-    private string $name;
-    private string $lastName;
-    public function __construct(int $id, int $filmId, string $name, string $lastName)
+    private int $fioId;
+    private string $role;
+
+    public function __construct(int $id, int $filmId, int $fioId, string $role)
     {
         $this->id = $id;
         $this->filmId = $filmId;
-        $this->name = $name;
-        $this->lastName = $lastName;
+        $this->fioId = $fioId;
+        $this->role = $role;
     }
 
-    /**
-     * @return string
-     */
-    public function getName() : string
-    {
-        return $this->name;
-    }
 
     /**
      * @return int
@@ -31,13 +25,20 @@ class actor extends model
         return $this->filmId;
     }
 
-
     /**
      * @return string
      */
-    public function getLastName() : string
+    public function getRole(): string
     {
-        return $this->lastName;
+        return $this->role;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFioId(): int
+    {
+        return $this->fioId;
     }
 
     /**
@@ -48,25 +49,26 @@ class actor extends model
         $this->filmId = $filmId;
     }
 
+
     /**
-     * @param string $lastName
+     * @param int $fioId
      */
-    public function setLastName(string $lastName): void
+    public function setFioId(int $fioId): void
     {
-        $this->lastName = $lastName;
+        $this->fioId = $fioId;
     }
 
     /**
-     * @param string $name
+     * @param string $role
      */
-    public function setName(string $name): void
+    public function setRole(string $role): void
     {
-        $this->name = $name;
+        $this->role = $role;
     }
 
     public function __toString(): string
     {
-        return "Actor: Id: $this->id FilmId: $this->filmId Name: $this->name Last Name: $this->lastName";
+        return "Actor: Id: $this->id FilmId: $this->filmId FioId: $this->fioId Role: $this->role";
     }
 
     function equals($param): bool
@@ -75,9 +77,9 @@ class actor extends model
             return false;
 
         if($this->id === $param->getId()
-            && $this->name === $param->getName()
-            && $this->lastName === $param->getLastName()
-            && $this->filmId === $param->getFilmId())
+            && $this->fioId === $param->getFioId()
+            && $this->filmId === $param->getFilmId()
+            && $this->role === $param->getRole())
             return true;
 
         return false;

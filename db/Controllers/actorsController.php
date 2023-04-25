@@ -36,10 +36,10 @@ class actorsController extends controller
 
         try {
             $filmId = $newItem->getFilmId();
-            $name = $newItem->getName();
-            $lastName = $newItem->getLastName();
+            $fioId = $newItem->getFioId();
+            $role = $newItem->getRole();
 
-            $upd = "UPDATE actors SET filmId='$filmId',name='$name', lastName='$lastName' WHERE Id='$id'";
+            $upd = "UPDATE actors SET filmId='$filmId',fioId='$fioId', role='$role' WHERE Id='$id'";
 
             if($conn->query($upd)){
                 echo '<p>updated!</p>';
@@ -64,10 +64,10 @@ class actorsController extends controller
         try {
 
             $filmId = $item->getFilmId();
-            $name = $item->getName();
-            $lastName = $item->getLastName();
+            $fioId = $item->getFioId();
+            $role = $item->getRole();
 
-            $sql_ins = "INSERT INTO actors (filmId, name, lastName) VALUES ('$filmId', '$name', '$lastName')";
+            $sql_ins = "INSERT INTO actors (filmId, fioId, role) VALUES ('$filmId', '$fioId', '$role')";
 
             if($conn->query($sql_ins)){
                 echo '<p>added!</p>';
@@ -107,7 +107,7 @@ class actorsController extends controller
             $res = $conn->query($select);
             $result = array();
             foreach ($res as $iter){
-                array_push($result, new actor($iter['Id'], $iter['FilmId'], $iter['Name'], $iter['LastName']));
+                array_push($result, new actor($iter['Id'], $iter['FilmId'], $iter['FioId'], $iter['Role']));
             }
             $res->free();
             return $result;
@@ -126,7 +126,7 @@ class actorsController extends controller
             $res = $conn->query($select);
             $result = null;
             foreach ($res as $iter){
-                $result = new actor($iter['Id'], $iter['FilmId'], $iter['Name'], $iter['LastName']);
+                $result = new actor($iter['Id'], $iter['FilmId'], $iter['FioId'], $iter['Role']);
             }
             $res->free();
             return $result;

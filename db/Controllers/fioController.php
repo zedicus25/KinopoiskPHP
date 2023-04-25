@@ -1,27 +1,28 @@
 <?php
 
 namespace Database\Controllers;
-use Database\Models\director;
+
+use Database\Models\memberFio;
 use Database\Models\model;
 
 require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
-require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/director.php';
-class directorController extends controller
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/memberFio.php';
+class fioController extends controller
 {
-
     public function add(model $item): void
     {
-        if(!($item instanceof director))
+        if(!($item instanceof memberFio))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
 
         try {
 
-            $filmId = $item->getFilmId();
-            $fioId = $item->getFioId();
+            $name = $item->getName();
+            $lastName = $item->getLastName();
+            $patronymic = $item->getPatronymic();
 
-            $sql_ins = "INSERT INTO directors (filmId, fioId) VALUES ('$filmId', '$fioId')";
+            $sql_ins = "INSERT INTO memberfios (name, lastName, patronymic) VALUES ('$name', '$lastName', '$patronymic')";
 
             if($conn->query($sql_ins)){
                 echo '<p>added!</p>';
@@ -39,7 +40,7 @@ class directorController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $del = "DELETE FROM directors WHERE Id='$id';";
+            $del = "DELETE FROM memberfios WHERE Id='$id';";
 
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
@@ -52,18 +53,28 @@ class directorController extends controller
         }
     }
 
-    public function update(int $id, $newItem): void
+    public function removeByModel(model $model): void
     {
-        if(!($newItem instanceof director))
+        if(!($model instanceof memberFio))
+            throw new \InvalidArgumentException("Wrong type!");
+
+        $id = $model->getId();
+        $this->remove($id);
+    }
+
+    public function update(int $id, model $newItem): void
+    {
+        if(!($newItem instanceof memberFio))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
 
         try {
-            $filmId = $newItem->getFilmId();
-            $fioId = $newItem->getFioId();
+            $name = $newItem->getName();
+            $lastName = $newItem->getName();
+            $patronymic = $newItem->getPatronymic();
 
-            $upd = "UPDATE directors SET filmId='$filmId',fioId='$fioId' WHERE Id='$id'";
+            $upd = "UPDATE memberfios SET name='$name',lastName='$lastName', patronymic='$patronymic' WHERE Id='$id'";
 
             if($conn->query($upd)){
                 echo '<p>updated!</p>';
@@ -77,35 +88,25 @@ class directorController extends controller
         }
     }
 
-
-    public function removeByModel(model $model): void
-    {
-        if(!($model instanceof director))
-            throw new \InvalidArgumentException("Wrong type!");
-
-        $id = $model->getId();
-        $this->remove($id);
-    }
-
     public function updateByModel(model $oldItem, model $newItem): void
     {
-        if(!($oldItem instanceof director))
+        if(!($oldItem instanceof memberFio))
             throw new \InvalidArgumentException("Wrong type!");
 
         $id = $oldItem->getId();
         $this->update($id, $newItem);
     }
 
-    public function select(string $text): array
+    public function getById(int $id): model
     {
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM directors WHERE $text";
+            $select = "SELECT * FROM memberfios WHERE id='$id'";
             $res = $conn->query($select);
-            $result = array();
+            $result = null;
             foreach ($res as $iter){
-                array_push($result, new director($iter['Id'], $iter['FilmId'], $iter['FioId']));
+                $result = new memberFio($iter['Id'], $iter['Name'], $iter['LastName'], $iter['Patronymic']);
             }
             $res->free();
             return $result;
@@ -115,16 +116,16 @@ class directorController extends controller
         }
     }
 
-    public function getById(int $id): model
+    public function select(string $text): array
     {
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM directors WHERE id='$id'";
+            $select = "SELECT * FROM memberfios WHERE $text";
             $res = $conn->query($select);
-            $result = null;
+            $result = array();
             foreach ($res as $iter){
-                $result = new director($iter['Id'], $iter['FilmId'], $iter['FioId']);
+                array_push($result, new memberFio($iter['Id'], $iter['Name'], $iter['LastName'], $iter['Patronymic']));
             }
             $res->free();
             return $result;

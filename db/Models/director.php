@@ -5,23 +5,22 @@ require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/model.php';
 class director extends model
 {
     private int $filmId;
-    private string $name;
-    private string $lastName;
+    private int $fioId;
 
-    public function __construct(int $id, int $filmId, string $name, string $lastName)
+
+    public function __construct(int $id, int $filmId, int $fioId)
     {
         $this->id = $id;
         $this->filmId = $filmId;
-        $this->name = $name;
-        $this->lastName = $lastName;
+        $this->fioId = $fioId;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getName() : string
+    public function getFioId(): int
     {
-        return $this->name;
+        return $this->fioId;
     }
 
     /**
@@ -32,13 +31,6 @@ class director extends model
         return $this->filmId;
     }
 
-    /**
-     * @return string
-     */
-    public function getLastName() : string
-    {
-        return $this->lastName;
-    }
 
     /**
      * @param int $filmId
@@ -50,24 +42,16 @@ class director extends model
 
 
     /**
-     * @param string $lastName
+     * @param int $fioId
      */
-    public function setLastName(string $lastName): void
+    public function setFioId(int $fioId): void
     {
-        $this->lastName = $lastName;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
+        $this->fioId = $fioId;
     }
 
     public function __toString(): string
     {
-        return "Director: Id: $this->id FilmId: $this->filmId Name: $this->name Last Name: $this->lastName";
+        return "Director: Id: $this->id FilmId: $this->filmId FioId: $this->fioId";
     }
 
     function equals($param): bool
@@ -76,8 +60,7 @@ class director extends model
             return false;
 
         if($this->id === $param->getId()
-            && $this->name === $param->getName()
-            && $this->lastName === $param->getLastName()
+            && $this->fioId === $param->getFioId()
             && $this->filmId === $param->getFilmId())
             return true;
 

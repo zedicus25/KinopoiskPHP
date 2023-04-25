@@ -6,6 +6,7 @@ use Database\Controllers\directorController;
 use Database\Controllers\filmDataController;
 use Database\Controllers\filmRatingsController;
 use Database\Controllers\filmsController;
+use Database\Controllers\fioController;
 use Database\Controllers\genreController;
 use Database\Controllers\usersController;
 
@@ -16,16 +17,18 @@ require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/filmRatingsController.php
 require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/filmsController.php';
 require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/genreController.php';
 require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/usersController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/fioController.php';
 class UOF
 {
     private $conn;
-    private $actorController;
-    private $directorController;
-    private $filmDataController;
-    private $filmRatingsController;
-    private $filmsController;
-    private $genreController;
-    private $usersController;
+    private  fioController $fioController;
+    private actorsController $actorController;
+    private directorController $directorController;
+    private filmDataController $filmDataController;
+    private filmRatingsController $filmRatingsController;
+    private filmsController $filmsController;
+    private genreController $genreController;
+    private usersController $usersController;
 
     public function __construct($db)
     {
@@ -37,6 +40,7 @@ class UOF
         $this->filmsController = new filmsController($this->conn);
         $this->genreController = new genreController($this->conn);
         $this->usersController = new usersController($this->conn);
+        $this->fioController = new fioController($this->conn);
 
     }
 
@@ -94,5 +98,13 @@ class UOF
     public function getUsersController(): usersController
     {
         return $this->usersController;
+    }
+
+    /**
+     * @return fioController
+     */
+    public function getFioController(): fioController
+    {
+        return $this->fioController;
     }
 }
