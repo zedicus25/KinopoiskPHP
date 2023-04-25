@@ -9,10 +9,10 @@ require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/user.php';
 class usersController extends controller
 {
 
-    public function add(model $item): void
+    public function add(model $item): bool
     {
         if(!($item instanceof user))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $conn = $this->connection->connect();
 
@@ -25,19 +25,20 @@ class usersController extends controller
             $sql_ins = "INSERT INTO users (login, password, isPremium) VALUES ('$login', '$pass', '$isPremium')";
 
             if($conn->query($sql_ins)){
-                echo '<p>added!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         } finally {
-            $conn?->close();
         }
 
 
     }
 
-    public function remove(int $id): void
+    public function remove(int $id): bool
     {
         $conn = $this->connection->connect();
 
@@ -45,20 +46,21 @@ class usersController extends controller
             $del = "DELETE FROM users WHERE Id='$id';";
 
             if($conn->query($del)){
-                echo '<p>deleted!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         } finally {
-            $conn->close();
         }
     }
 
-    public function update(int $id, $newItem): void
+    public function update(int $id, $newItem): bool
     {
-        if(!($newItem instanceof users))
-            throw new \InvalidArgumentException("Wrong type!");
+        if(!($newItem instanceof user))
+            return false;
 
         $conn = $this->connection->connect();
 
@@ -70,33 +72,34 @@ class usersController extends controller
             $upd = "UPDATE users SET login='$login',password='$pass',isPremium='$isPremium' WHERE Id='$id'";
 
             if($conn->query($upd)){
-                echo '<p>updated!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         }
         finally {
-            $conn->close();
         }
     }
 
-    public function removeByModel(model $model): void
+    public function removeByModel(model $model): bool
     {
         if(!($model instanceof user))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $id = $model->getId();
-        $this->remove($id);
+        return $this->remove($id);
     }
 
-    public function updateByModel(model $oldItem, model $newItem): void
+    public function updateByModel(model $oldItem, model $newItem): bool
     {
         if(!($oldItem instanceof user))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $id = $oldItem->getId();
-        $this->update($id, $newItem);
+        return $this->update($id, $newItem);
     }
 
     public function getById(int $id): model

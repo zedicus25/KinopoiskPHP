@@ -9,10 +9,10 @@ require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
 require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/memberFio.php';
 class fioController extends controller
 {
-    public function add(model $item): void
+    public function add(model $item): bool
     {
         if(!($item instanceof memberFio))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $conn = $this->connection->connect();
 
@@ -25,17 +25,19 @@ class fioController extends controller
             $sql_ins = "INSERT INTO memberfios (name, lastName, patronymic) VALUES ('$name', '$lastName', '$patronymic')";
 
             if($conn->query($sql_ins)){
-                echo '<p>added!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         } finally {
             $conn?->close();
         }
     }
 
-    public function remove(int $id): void
+    public function remove(int $id): bool
     {
         $conn = $this->connection->connect();
 
@@ -43,29 +45,31 @@ class fioController extends controller
             $del = "DELETE FROM memberfios WHERE Id='$id';";
 
             if($conn->query($del)){
-                echo '<p>deleted!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         } finally {
             $conn->close();
         }
     }
 
-    public function removeByModel(model $model): void
+    public function removeByModel(model $model): bool
     {
         if(!($model instanceof memberFio))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $id = $model->getId();
-        $this->remove($id);
+        return $this->remove($id);
     }
 
-    public function update(int $id, model $newItem): void
+    public function update(int $id, model $newItem): bool
     {
         if(!($newItem instanceof memberFio))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $conn = $this->connection->connect();
 
@@ -77,10 +81,12 @@ class fioController extends controller
             $upd = "UPDATE memberfios SET name='$name',lastName='$lastName', patronymic='$patronymic' WHERE Id='$id'";
 
             if($conn->query($upd)){
-                echo '<p>updated!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         }
         finally {
@@ -88,13 +94,13 @@ class fioController extends controller
         }
     }
 
-    public function updateByModel(model $oldItem, model $newItem): void
+    public function updateByModel(model $oldItem, model $newItem): bool
     {
         if(!($oldItem instanceof memberFio))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $id = $oldItem->getId();
-        $this->update($id, $newItem);
+        return $this->update($id, $newItem);
     }
 
     public function getById(int $id): model

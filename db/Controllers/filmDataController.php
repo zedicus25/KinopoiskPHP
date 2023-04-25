@@ -9,10 +9,10 @@ require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/filmData.php';
 class filmDataController extends controller
 {
 
-    public function add(model $item): void
+    public function add(model $item): bool
     {
         if(!($item instanceof filmData))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $conn = $this->connection->connect();
 
@@ -26,17 +26,19 @@ class filmDataController extends controller
             $sql_ins = "INSERT INTO filmdata (country, title, year, duration) VALUES ('$country', '$title', '$year', '$duration')";
 
             if($conn->query($sql_ins)){
-                echo '<p>added!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         } finally {
             $conn?->close();
         }
     }
 
-    public function remove(int $id): void
+    public function remove(int $id): bool
     {
         $conn = $this->connection->connect();
 
@@ -44,20 +46,22 @@ class filmDataController extends controller
             $del = "DELETE FROM filmdata WHERE Id='$id';";
 
             if($conn->query($del)){
-                echo '<p>deleted!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         } finally {
             $conn->close();
         }
     }
 
-    public function update(int $id, $newItem): void
+    public function update(int $id, $newItem): bool
     {
         if(!($newItem instanceof filmData))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $conn = $this->connection->connect();
 
@@ -70,10 +74,12 @@ class filmDataController extends controller
             $upd = "UPDATE filmdata SET country='$country',title='$title', year='$year', duration='$duration' WHERE Id='$id'";
 
             if($conn->query($upd)){
-                echo '<p>updated!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         }
         finally {
@@ -83,23 +89,23 @@ class filmDataController extends controller
 
 
 
-    public function removeByModel(model $model): void
+    public function removeByModel(model $model): bool
     {
         if(!($model instanceof filmData))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
 
         $id = $model->getId();
-        $this->remove($id);
+        return $this->remove($id);
     }
 
-    public function updateByModel(model $oldItem, model $newItem): void
+    public function updateByModel(model $oldItem, model $newItem): bool
     {
         if(!($oldItem instanceof filmData))
-            throw new \InvalidArgumentException("Wrong type!");
+           return false;
 
         $id = $oldItem->getId();
-        $this->update($id, $newItem);
+        return $this->update($id, $newItem);
     }
 
     public function select(string $text): array

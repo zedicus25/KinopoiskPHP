@@ -9,10 +9,10 @@ require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/filmRating.php';
 class filmRatingsController extends controller
 {
 
-    public function add(model $item): void
+    public function add(model $item): bool
     {
         if(!($item instanceof filmRating))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $conn = $this->connection->connect();
 
@@ -25,17 +25,19 @@ class filmRatingsController extends controller
             $sql_ins = "INSERT INTO filmratings (likes, dislikes, imdb) VALUES ('$likes', '$dislikes', '$imdb')";
 
             if($conn->query($sql_ins)){
-                echo '<p>added!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         } finally {
             $conn?->close();
         }
     }
 
-    public function remove(int $id): void
+    public function remove(int $id): bool
     {
         $conn = $this->connection->connect();
 
@@ -43,17 +45,19 @@ class filmRatingsController extends controller
             $del = "DELETE FROM filmratings WHERE Id='$id';";
 
             if($conn->query($del)){
-                echo '<p>deleted!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         } finally {
             $conn->close();
         }
     }
 
-    public function update(int $id, $newItem): void
+    public function update(int $id, $newItem): bool
     {
         if(!($newItem instanceof filmRating))
             throw new \InvalidArgumentException("Wrong type!");
@@ -68,10 +72,12 @@ class filmRatingsController extends controller
             $upd = "UPDATE filmratings SET likes='$likes',dislikes='$dislikes', imdb='$imdb' WHERE Id='$id'";
 
             if($conn->query($upd)){
-                echo '<p>updated!</p>';
+                $conn?->close();
+                return true;
             }
             else{
-                throw new \mysqli_sql_exception("db error");
+                $conn?->close();
+                return false;
             }
         }
         finally {
@@ -79,22 +85,22 @@ class filmRatingsController extends controller
         }
     }
 
-    public function removeByModel(model $model): void
+    public function removeByModel(model $model): bool
     {
         if(!($model instanceof filmRating))
-            throw new \InvalidArgumentException("Wrong type!");
+           return false;
 
         $id = $model->getId();
-        $this->remove($id);
+        return $this->remove($id);
     }
 
-    public function updateByModel(model $oldItem, model $newItem): void
+    public function updateByModel(model $oldItem, model $newItem): bool
     {
         if(!($oldItem instanceof filmRating))
-            throw new \InvalidArgumentException("Wrong type!");
+            return false;
 
         $id = $oldItem->getId();
-        $this->update($id, $newItem);
+        return $this->update($id, $newItem);
     }
 
     public function getById(int $id): model

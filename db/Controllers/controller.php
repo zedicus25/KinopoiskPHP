@@ -17,15 +17,15 @@ abstract class controller
         $this->connection = $connection;
     }
 
-    public abstract function add(model $item): void;
+    public abstract function add(model $item): bool;
 
 
-    public abstract function remove(int $id) : void;
-    public abstract function removeByModel(model $model) : void;
+    public abstract function remove(int $id) : bool;
+    public abstract function removeByModel(model $model) : bool;
 
 
-    public abstract function update(int $id, model $newItem) : void;
-    public abstract function updateByModel(model $oldItem, model $newItem) : void;
+    public abstract function update(int $id, model $newItem) : bool;
+    public abstract function updateByModel(model $oldItem, model $newItem) : bool;
 
     public abstract function getById(int $id) : model;
 
