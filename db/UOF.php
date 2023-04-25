@@ -1,31 +1,34 @@
 <?php
 
-namespace ORM;
-use ORM\Controllers\actorsController;
-use ORM\Controllers\directorController;
-use ORM\Controllers\filmDataController;
-use ORM\Controllers\filmRatingsController;
-use ORM\Controllers\filmsController;
-use ORM\Controllers\genreController;
-use ORM\Controllers\usersController;
+namespace Database;
+use Database\Controllers\actorsController;
+use Database\Controllers\directorController;
+use Database\Controllers\filmDataController;
+use Database\Controllers\filmRatingsController;
+use Database\Controllers\filmsController;
+use Database\Controllers\fioController;
+use Database\Controllers\genreController;
+use Database\Controllers\usersController;
 
-require_once 'ORM/Controllers/actorsController.php';
-require_once 'ORM/Controllers/directorController.php';
-require_once 'ORM/Controllers/filmDataController.php';
-require_once 'ORM/Controllers/filmRatingsController.php';
-require_once 'ORM/Controllers/filmsController.php';
-require_once 'ORM/Controllers/genreController.php';
-require_once 'ORM/Controllers/usersController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/actorsController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/directorController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/filmDataController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/filmRatingsController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/filmsController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/genreController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/usersController.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/fioController.php';
 class UOF
 {
     private $conn;
-    private $actorController;
-    private $directorController;
-    private $filmDataController;
-    private $filmRatingsController;
-    private $filmsController;
-    private $genreController;
-    private $usersController;
+    private  fioController $fioController;
+    private actorsController $actorController;
+    private directorController $directorController;
+    private filmDataController $filmDataController;
+    private filmRatingsController $filmRatingsController;
+    private filmsController $filmsController;
+    private genreController $genreController;
+    private usersController $usersController;
 
     public function __construct($db)
     {
@@ -37,6 +40,7 @@ class UOF
         $this->filmsController = new filmsController($this->conn);
         $this->genreController = new genreController($this->conn);
         $this->usersController = new usersController($this->conn);
+        $this->fioController = new fioController($this->conn);
 
     }
 
@@ -94,5 +98,13 @@ class UOF
     public function getUsersController(): usersController
     {
         return $this->usersController;
+    }
+
+    /**
+     * @return fioController
+     */
+    public function getFioController(): fioController
+    {
+        return $this->fioController;
     }
 }

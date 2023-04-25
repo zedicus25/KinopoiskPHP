@@ -1,36 +1,38 @@
 <?php
 
-namespace ORM\Controllers;
-use ORM\Objects\genre;
-use ORM\Objects\model;
+namespace Database\Controllers;
 
-require_once 'ORM/Controllers/controller.php';
-require_once 'ORM/Objects/genre.php';
-class genreController extends controller
+use Database\Models\memberFio;
+use Database\Models\model;
+
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Controllers/controller.php';
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/memberFio.php';
+class fioController extends controller
 {
-
     public function add(model $item): void
     {
-        if(!($item instanceof genre))
+        if(!($item instanceof memberFio))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
+
         try {
 
-            $title = $item->getTitle();
+            $name = $item->getName();
+            $lastName = $item->getLastName();
+            $patronymic = $item->getPatronymic();
 
-            $sql_ins = "INSERT INTO genres (title) VALUES ('$title')";
+            $sql_ins = "INSERT INTO memberfios (name, lastName, patronymic) VALUES ('$name', '$lastName', '$patronymic')";
 
             if($conn->query($sql_ins)){
                 echo '<p>added!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn?->close();
         }
-
     }
 
     public function remove(int $id): void
@@ -38,36 +40,47 @@ class genreController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $del = "DELETE FROM genres WHERE Id='$id';";
+            $del = "DELETE FROM memberfios WHERE Id='$id';";
 
             if($conn->query($del)){
                 echo '<p>deleted!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         } finally {
             $conn->close();
         }
     }
 
-    public function update(int $id, $newItem): void
+    public function removeByModel(model $model): void
     {
-        if(!($newItem instanceof genre))
+        if(!($model instanceof memberFio))
+            throw new \InvalidArgumentException("Wrong type!");
+
+        $id = $model->getId();
+        $this->remove($id);
+    }
+
+    public function update(int $id, model $newItem): void
+    {
+        if(!($newItem instanceof memberFio))
             throw new \InvalidArgumentException("Wrong type!");
 
         $conn = $this->connection->connect();
 
         try {
-            $title = $newItem->getTitle();
+            $name = $newItem->getName();
+            $lastName = $newItem->getName();
+            $patronymic = $newItem->getPatronymic();
 
-            $upd = "UPDATE genres SET title='$title' WHERE Id='$id'";
+            $upd = "UPDATE memberfios SET name='$name',lastName='$lastName', patronymic='$patronymic' WHERE Id='$id'";
 
             if($conn->query($upd)){
                 echo '<p>updated!</p>';
             }
             else{
-                throw new \mysqli_sql_exception("Database error");
+                throw new \mysqli_sql_exception("db error");
             }
         }
         finally {
@@ -75,19 +88,9 @@ class genreController extends controller
         }
     }
 
-
-    public function removeByModel(model $model): void
-    {
-        if(!($model instanceof genre))
-            throw new \InvalidArgumentException("Wrong type!");
-
-        $id = $model->getId();
-        $this->remove($id);
-    }
-
     public function updateByModel(model $oldItem, model $newItem): void
     {
-        if(!($oldItem instanceof genre))
+        if(!($oldItem instanceof memberFio))
             throw new \InvalidArgumentException("Wrong type!");
 
         $id = $oldItem->getId();
@@ -99,11 +102,11 @@ class genreController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM genres WHERE id='$id'";
+            $select = "SELECT * FROM memberfios WHERE id='$id'";
             $res = $conn->query($select);
             $result = null;
             foreach ($res as $iter){
-                $result = new genre($iter['Id'], $iter['Title']);
+                $result = new memberFio($iter['Id'], $iter['Name'], $iter['LastName'], $iter['Patronymic']);
             }
             $res->free();
             return $result;
@@ -118,11 +121,11 @@ class genreController extends controller
         $conn = $this->connection->connect();
 
         try {
-            $select = "SELECT * FROM genres WHERE $text";
+            $select = "SELECT * FROM memberfios WHERE $text";
             $res = $conn->query($select);
             $result = array();
             foreach ($res as $iter){
-                array_push($result, new genre($iter['Id'], $iter['Title']));
+                array_push($result, new memberFio($iter['Id'], $iter['Name'], $iter['LastName'], $iter['Patronymic']));
             }
             $res->free();
             return $result;

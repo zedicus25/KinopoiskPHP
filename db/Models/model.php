@@ -1,9 +1,8 @@
 <?php
 
-namespace ORM\Objects;
+namespace Database\Models;
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/IEquals.php';
 
-use ORM\IEquals;
-require_once 'ORM/IEquals.php';
 abstract class model implements IEquals
 {
     protected int $id;

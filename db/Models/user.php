@@ -1,8 +1,7 @@
 <?php
 
-namespace ORM\Objects;
-use ORM\IEquals;
-require_once 'ORM/Objects/model.php';
+namespace Database\Models;
+require_once 'C:\xampp\htdocs\Kinopoisk/db/Models/model.php';
 class user extends model
 {
     private string $login;

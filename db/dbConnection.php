@@ -1,8 +1,8 @@
 <?php
 
-namespace ORM;
+namespace Database;
 
-class db
+class dbConnection
 {
     private const hostname = 'localhost';
     private const username= 'root';
